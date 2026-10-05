@@ -1,0 +1,40 @@
+#include<stdio.h>
+int main() {
+int N, W;
+
+scanf("%d", &N);
+
+int value[N], weight[N];
+
+for (int i = 0; i < N; i++) {
+    scanf("%d", &value[i]);
+}
+
+for (int i = 0; i < N; i++) {
+    scanf("%d", &weight[i]);
+}
+
+scanf("%d", &W);
+
+// dp[w] = maximum value for capacity w
+int dp[W + 1];
+
+for (int w = 0; w <= W; w++) {
+    dp[w] = 0;
+}
+
+// Process each item
+for (int i = 0; i < N; i++) {
+    // Traverse backwards to ensure each item is used only once
+    for (int w = W; w >= weight[i]; w--) {
+        if (dp[w - weight[i]] + value[i] > dp[w]) {
+            dp[w] = dp[w - weight[i]] + value[i];
+        }
+    }
+}
+
+printf("%d\n", dp[W]);
+
+return 0;
+}
+
